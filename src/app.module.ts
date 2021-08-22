@@ -6,6 +6,9 @@ import { typeOrmConfigFactory } from './config/typeormConfig.factory';
 import { EventsModule } from './modules/events/events.module';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path';
+import { GraphQLError } from 'graphql';
 
 @Module({
   imports: [
@@ -15,6 +18,25 @@ import { AuthModule } from './auth/auth.module';
       imports: [ConfigModule],
       useFactory: () => typeOrmConfigFactory(),
       inject: [ConfigService],
+    }),
+    GraphQLModule.forRoot({
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      formatError: (error: GraphQLError) => {
+        const graphQLFormattedError = {
+          statusCode: error.extensions?.exception?.status,
+          message:
+            error.extensions?.exception?.response?.message ||
+            error?.extensions?.exception?.stacktrace?.[0] ||
+            '-',
+          code:
+            error.extensions?.exception?.response?.code ||
+            error.extensions?.code ||
+            '-',
+        };
+        return graphQLFormattedError;
+      },
+      fieldResolverEnhancers: ['guards'],
+      context: ({ req, res }) => ({ req, res }),
     }),
     AuthModule,
   ],
