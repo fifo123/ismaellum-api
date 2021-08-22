@@ -1,4 +1,4 @@
-import { SignUpUser } from '@/common/domain/dtos/user/sign-up-user.dto';
+import { SignUpUser } from '@/common/domain/dtos/user/';
 import { User } from '@/common/domain/models';
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from './user.repository';

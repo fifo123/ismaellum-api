@@ -1,4 +1,4 @@
-import { MakeLogin } from '@/common/domain/dtos/auth/make-login.dto';
+import { MakeLogin } from '@/common/domain/dtos/auth/';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 
