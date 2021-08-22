@@ -32,4 +32,21 @@ export class UserRepository {
       throw new HttpException('Error in DB, could not sign up user', 500);
     }
   }
+
+  async updateProfilePicture(
+    user_id: number,
+    profilePicture: string,
+  ): Promise<string> {
+    try {
+      const user = await this.userRepository.findOne(user_id);
+      const lastProfilePicture = user.profileUri || null;
+      await this.userRepository.save({ ...user, profileUri: profilePicture });
+      return lastProfilePicture;
+    } catch (error) {
+      throw new HttpException(
+        'Error in DB, could not update profile picture',
+        500,
+      );
+    }
+  }
 }
