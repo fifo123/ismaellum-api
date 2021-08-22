@@ -1,4 +1,4 @@
-import { User } from '@/common/models';
+import { User } from '@/common/domain/models';
 import { UserEntity } from '@/infra/typeorm/entities';
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';

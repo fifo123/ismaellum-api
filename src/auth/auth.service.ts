@@ -1,4 +1,4 @@
-import { User } from '@/common/models';
+import { User } from '@/common/domain/models';
 import { UserRepository } from '@/modules/user/user.repository';
 import { HttpException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -13,8 +13,9 @@ export class AuthService {
 
   async validateUser(email: string, password: string): Promise<User | null> {
     const user = await this.userRepository.findUserByEmail(email);
-    const compare = await crypto.compare(password, user.password);
-    if (user && compare) return user;
+    if (!user) return null;
+    const compare = await crypto.compare(password, user?.password);
+    if (compare) return user;
     return null;
   }
 

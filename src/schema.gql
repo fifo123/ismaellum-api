@@ -5,3 +5,12 @@
 type Query {
   graphqlHealth: Boolean!
 }
+
+type Mutation {
+  login(login: MakeLogin!): String!
+}
+
+input MakeLogin {
+  email: String!
+  password: String!
+}
