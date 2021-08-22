@@ -4,5 +4,5 @@ export class User {
   profileUri: string;
   email: string;
 
-  private password: string;
+  password: string;
 }

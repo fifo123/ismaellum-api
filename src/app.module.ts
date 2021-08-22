@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { typeOrmConfigFactory } from './config/typeormConfig.factory';
 import { EventsModule } from './modules/events/events.module';
 import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { UserModule } from './modules/user/user.module';
       useFactory: () => typeOrmConfigFactory(),
       inject: [ConfigService],
     }),
+    AuthModule,
   ],
   controllers: [AppController],
 })
