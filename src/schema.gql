@@ -2,12 +2,27 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""User model"""
+type User {
+  user_id: Float!
+  name: String!
+  profileUri: String
+  email: String!
+}
+
 type Query {
   graphqlHealth: Boolean!
 }
 
 type Mutation {
+  signUpUser(data: SignUpUser!): User!
   login(login: MakeLogin!): String!
+}
+
+input SignUpUser {
+  email: String!
+  password: String!
+  name: String!
 }
 
 input MakeLogin {
