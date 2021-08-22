@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 @Resolver()
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
+
   @Query(() => Boolean)
   graphqlHealth(): boolean {
     return true;
