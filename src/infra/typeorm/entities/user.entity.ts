@@ -2,8 +2,10 @@ import {
   BeforeInsert,
   BeforeUpdate,
   Column,
+  CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import * as crypto from 'bcrypt';
 
@@ -41,6 +43,12 @@ export class UserEntity {
     nullable: false,
   })
   password: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   @BeforeInsert()
   async beforeInsert(): Promise<void> {
