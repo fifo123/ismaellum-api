@@ -4,10 +4,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import * as crypto from 'bcrypt';
+import { ProcedureHistoryEntity } from './procedure-history.entity';
 
 @Entity('User')
 export class UserEntity {
@@ -59,4 +61,9 @@ export class UserEntity {
   async beforeUpdate(): Promise<void> {
     this.password = await crypto.hash(this.password, 8);
   }
+
+  @OneToMany(() => ProcedureHistoryEntity, (procedure) => procedure.user, {
+    nullable: true,
+  })
+  procedures?: ProcedureHistoryEntity[];
 }

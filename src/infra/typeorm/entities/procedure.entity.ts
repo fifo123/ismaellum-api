@@ -2,9 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { ProcedureHistoryEntity } from './procedure-history.entity';
 
 @Entity('Procedure')
 export class ProcedureEntity {
@@ -52,4 +54,9 @@ export class ProcedureEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => ProcedureHistoryEntity, (procedure) => procedure.procedure, {
+    nullable: true,
+  })
+  procedures?: ProcedureHistoryEntity[];
 }
