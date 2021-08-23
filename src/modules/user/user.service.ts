@@ -1,3 +1,4 @@
+import { getLevelAndCurrentXp } from '@/common/constants/get-level-and-current-xp';
 import { SignUpUser } from '@/common/domain/dtos/user/';
 import { ProcedureHistory, User } from '@/common/domain/models';
 import { deleteFile } from '@/common/functions/delete-file';
@@ -55,5 +56,17 @@ export class UserService {
 
   async getUserTotalXp(user_id: number): Promise<number> {
     return this.procedureHistoryService.getUserTotalXp(user_id);
+  }
+
+  async getUserLevel(user_id: number): Promise<number> {
+    const totalXp = await this.procedureHistoryService.getUserTotalXp(user_id);
+    const { level } = getLevelAndCurrentXp(totalXp);
+    return level;
+  }
+
+  async getUserCurrentXp(user_id: number): Promise<number> {
+    const totalXp = await this.procedureHistoryService.getUserTotalXp(user_id);
+    const { currentXp } = getLevelAndCurrentXp(totalXp);
+    return currentXp;
   }
 }

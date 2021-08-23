@@ -39,6 +39,8 @@ type User {
   proceduresHistory: [ProcedureHistory!]
   credits: Int
   totalXp: Int
+  level: Int
+  currentXp: Int
 }
 
 type Query {

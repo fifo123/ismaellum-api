@@ -50,4 +50,18 @@ export class UserResolver {
   async totalXp(@Parent() user: User): Promise<number> {
     return this.userService.getUserTotalXp(user.user_id);
   }
+
+  @ResolveField(() => Int, {
+    nullable: true,
+  })
+  async level(@Parent() user: User): Promise<number> {
+    return this.userService.getUserLevel(user.user_id);
+  }
+
+  @ResolveField(() => Int, {
+    nullable: true,
+  })
+  async currentXp(@Parent() user: User): Promise<number> {
+    return this.userService.getUserCurrentXp(user.user_id);
+  }
 }
