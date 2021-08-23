@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { ProcedureHistory } from './procedure-history.model';
 
 @ObjectType({
   description: 'User model',
@@ -12,6 +13,9 @@ export class User {
   profileUri: string;
   @Field({ nullable: false })
   email: string;
+
+  @Field(() => [ProcedureHistory], { nullable: true })
+  proceduresHistory?: ProcedureHistory[];
 
   password: string;
 }
