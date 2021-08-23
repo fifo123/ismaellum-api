@@ -1,6 +1,7 @@
 import { getLevelAndCurrentXp } from '@/common/constants/get-level-and-current-xp';
 import { SignUpUser } from '@/common/domain/dtos/user/';
 import { ProcedureHistory, User } from '@/common/domain/models';
+import { Stats } from '@/common/domain/models/stats.model';
 import { deleteFile } from '@/common/functions/delete-file';
 import { HttpException, Injectable, Logger } from '@nestjs/common';
 import { ProcedureHistoryService } from '../procedure-history/procedure-history.service';
@@ -46,27 +47,15 @@ export class UserService {
     return this.procedureHistoryService.getProceduresByUserId(user_id);
   }
 
-  async getUserCredits(user_id: number): Promise<number> {
-    const creditsGained = await this.procedureHistoryService.getUserCredits(
-      user_id,
-    );
-    // To-do: Must see credits spent
-    return creditsGained;
-  }
-
-  async getUserTotalXp(user_id: number): Promise<number> {
-    return this.procedureHistoryService.getUserTotalXp(user_id);
-  }
-
-  async getUserLevel(user_id: number): Promise<number> {
-    const totalXp = await this.procedureHistoryService.getUserTotalXp(user_id);
-    const { level } = getLevelAndCurrentXp(totalXp);
-    return level;
-  }
-
-  async getUserCurrentXp(user_id: number): Promise<number> {
-    const totalXp = await this.procedureHistoryService.getUserTotalXp(user_id);
-    const { currentXp } = getLevelAndCurrentXp(totalXp);
-    return currentXp;
+  async getStats(user_id: number): Promise<Stats> {
+    const { totalXp, totalCredits } =
+      await this.procedureHistoryService.getUserTotalXpAndCredits(user_id);
+    const { currentXp, level } = getLevelAndCurrentXp(totalXp);
+    return {
+      totalXp,
+      currentXp,
+      level,
+      credits: totalCredits,
+    };
   }
 }

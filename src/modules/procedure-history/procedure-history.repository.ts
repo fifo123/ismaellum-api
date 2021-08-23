@@ -1,5 +1,5 @@
 import { CreateProcedureEvent } from '@/common/domain/dtos/procedure-history/procedure-history-event.dto';
-import { Total } from '@/common/domain/interfaces/total.interface';
+import { XpAndCreditsTotal } from '@/common/domain/interfaces/xp-and-credits-total.interface';
 import { ProcedureHistory } from '@/common/domain/models';
 import { ProcedureHistoryEntity } from '@/infra/typeorm/entities';
 import { HttpException, Injectable } from '@nestjs/common';
@@ -55,29 +55,7 @@ export class ProcedureHistoryRepository {
     }
   }
 
-  async getUserCredits(user_id: number): Promise<number> {
-    try {
-      return await this.getTotalValue(user_id, 'credits');
-    } catch (error) {
-      throw new HttpException('Error in DB, could not get credits gained', 500);
-    }
-  }
-
-  async getUserTotalXp(user_id: number): Promise<number> {
-    try {
-      return await this.getTotalValue(user_id, 'xp');
-    } catch (error) {
-      throw new HttpException(
-        'Error in DB, could not get total xp gained',
-        500,
-      );
-    }
-  }
-
-  private async getTotalValue(
-    user_id: number,
-    type: 'credits' | 'xp',
-  ): Promise<number> {
+  async getUserTotalXpAndCredits(user_id: number): Promise<XpAndCreditsTotal> {
     try {
       const qb =
         this.procedureHistoryRepository.createQueryBuilder('procedure-history');
@@ -86,10 +64,17 @@ export class ProcedureHistoryRepository {
       qb.where('user.user_id = :user_id', {
         user_id,
       });
-      const select = `SUM(("procedure-history"."percent" / 100) * "procedure"."${type}_value")`;
-      qb.select(select, 'total');
-      const { total } = await qb.getRawOne<Total>();
-      return +total.toFixed(0) || 0;
+      const getSelect = (type: 'credits' | 'xp') =>
+        `SUM(("procedure-history"."percent" / 100) * "procedure"."${type}_value")`;
+      qb.select(getSelect('credits'), 'totalCredits');
+      qb.addSelect(getSelect('xp'), 'totalXp');
+      const { totalCredits = 0, totalXp = 0 } =
+        await qb.getRawOne<XpAndCreditsTotal>();
+
+      return {
+        totalCredits: +totalCredits.toFixed(0),
+        totalXp: +totalXp.toFixed(0),
+      };
     } catch (error) {
       throw new HttpException('Error in DB, could not get credits gained', 500);
     }

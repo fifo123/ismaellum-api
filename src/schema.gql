@@ -37,6 +37,11 @@ type User {
   profileUri: String
   email: String!
   proceduresHistory: [ProcedureHistory!]
+  stats: Stats
+}
+
+"""Stats model"""
+type Stats {
   credits: Int
   totalXp: Int
   level: Int

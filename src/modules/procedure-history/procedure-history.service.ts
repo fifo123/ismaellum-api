@@ -1,4 +1,5 @@
 import { CreateProcedureEvent } from '@/common/domain/dtos/procedure-history/procedure-history-event.dto';
+import { XpAndCreditsTotal } from '@/common/domain/interfaces/xp-and-credits-total.interface';
 import { ProcedureHistory } from '@/common/domain/models';
 import { Injectable } from '@nestjs/common';
 import { ProcedureHistoryRepository } from './procedure-history.repository';
@@ -19,11 +20,7 @@ export class ProcedureHistoryService {
     return this.procedureHistoryRepository.createProcedureEvent(data);
   }
 
-  async getUserCredits(user_id: number): Promise<number> {
-    return this.procedureHistoryRepository.getUserCredits(user_id);
-  }
-
-  async getUserTotalXp(user_id: number): Promise<number> {
-    return this.procedureHistoryRepository.getUserTotalXp(user_id);
+  async getUserTotalXpAndCredits(user_id: number): Promise<XpAndCreditsTotal> {
+    return this.procedureHistoryRepository.getUserTotalXpAndCredits(user_id);
   }
 }
