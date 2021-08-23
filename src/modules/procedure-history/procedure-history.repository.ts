@@ -1,4 +1,5 @@
 import { CreateProcedureEvent } from '@/common/domain/dtos/procedure-history/procedure-history-event.dto';
+import { Total } from '@/common/domain/interfaces/total.interface';
 import { ProcedureHistory } from '@/common/domain/models';
 import { ProcedureHistoryEntity } from '@/infra/typeorm/entities';
 import { HttpException, Injectable } from '@nestjs/common';
@@ -51,6 +52,35 @@ export class ProcedureHistoryRepository {
         'Error in DB, could not create procedure event',
         500,
       );
+    }
+  }
+
+  async getUserCredits(user_id: number): Promise<number> {
+    try {
+      return await this.getTotalValue(user_id, 'credits');
+    } catch (error) {
+      throw new HttpException('Error in DB, could not get credits gained', 500);
+    }
+  }
+
+  private async getTotalValue(
+    user_id: number,
+    type: 'credits' | 'xp',
+  ): Promise<number> {
+    try {
+      const qb =
+        this.procedureHistoryRepository.createQueryBuilder('procedure-history');
+      qb.leftJoinAndSelect('procedure-history.user', 'user');
+      qb.leftJoinAndSelect('procedure-history.procedure', 'procedure');
+      qb.where('user.user_id = :user_id', {
+        user_id,
+      });
+      const select = `SUM(("procedure-history"."percent" / 100) * "procedure"."${type}_value")`;
+      qb.select(select, 'total');
+      const { total } = await qb.getRawOne<Total>();
+      return +total.toFixed(0) || 0;
+    } catch (error) {
+      throw new HttpException('Error in DB, could not get credits gained', 500);
     }
   }
 

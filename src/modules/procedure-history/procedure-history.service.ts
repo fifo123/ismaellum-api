@@ -18,4 +18,8 @@ export class ProcedureHistoryService {
   ): Promise<ProcedureHistory> {
     return this.procedureHistoryRepository.createProcedureEvent(data);
   }
+
+  async getUserCredits(user_id: number): Promise<number> {
+    return this.procedureHistoryRepository.getUserCredits(user_id);
+  }
 }

@@ -37,6 +37,7 @@ type User {
   profileUri: String
   email: String!
   proceduresHistory: [ProcedureHistory!]
+  credits: Int
 }
 
 type Query {

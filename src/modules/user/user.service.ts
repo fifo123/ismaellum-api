@@ -44,4 +44,12 @@ export class UserService {
   async proceduresHistory(user_id: number): Promise<ProcedureHistory[]> {
     return this.procedureHistoryService.getProceduresByUserId(user_id);
   }
+
+  async getUserCredits(user_id: number): Promise<number> {
+    const creditsGained = await this.procedureHistoryService.getUserCredits(
+      user_id,
+    );
+    // To-do: Must see credits spent
+    return creditsGained;
+  }
 }

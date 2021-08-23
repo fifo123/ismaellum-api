@@ -6,6 +6,7 @@ import { ProcedureHistory, User } from '@/common/domain/models';
 import { UseGuards } from '@nestjs/common';
 import {
   Args,
+  Int,
   Mutation,
   Parent,
   Query,
@@ -34,5 +35,12 @@ export class UserResolver {
   })
   async proceduresHistory(@Parent() user: User): Promise<ProcedureHistory[]> {
     return this.userService.proceduresHistory(user.user_id);
+  }
+
+  @ResolveField(() => Int, {
+    nullable: true,
+  })
+  async credits(@Parent() user: User): Promise<number> {
+    return this.userService.getUserCredits(user.user_id);
   }
 }
