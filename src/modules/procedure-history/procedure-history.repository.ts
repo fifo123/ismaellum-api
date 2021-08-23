@@ -63,6 +63,17 @@ export class ProcedureHistoryRepository {
     }
   }
 
+  async getUserTotalXp(user_id: number): Promise<number> {
+    try {
+      return await this.getTotalValue(user_id, 'xp');
+    } catch (error) {
+      throw new HttpException(
+        'Error in DB, could not get total xp gained',
+        500,
+      );
+    }
+  }
+
   private async getTotalValue(
     user_id: number,
     type: 'credits' | 'xp',

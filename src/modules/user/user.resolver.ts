@@ -43,4 +43,11 @@ export class UserResolver {
   async credits(@Parent() user: User): Promise<number> {
     return this.userService.getUserCredits(user.user_id);
   }
+
+  @ResolveField(() => Int, {
+    nullable: true,
+  })
+  async totalXp(@Parent() user: User): Promise<number> {
+    return this.userService.getUserTotalXp(user.user_id);
+  }
 }

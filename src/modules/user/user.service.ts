@@ -52,4 +52,8 @@ export class UserService {
     // To-do: Must see credits spent
     return creditsGained;
   }
+
+  async getUserTotalXp(user_id: number): Promise<number> {
+    return this.procedureHistoryService.getUserTotalXp(user_id);
+  }
 }

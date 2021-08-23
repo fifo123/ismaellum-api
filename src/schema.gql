@@ -38,6 +38,7 @@ type User {
   email: String!
   proceduresHistory: [ProcedureHistory!]
   credits: Int
+  totalXp: Int
 }
 
 type Query {

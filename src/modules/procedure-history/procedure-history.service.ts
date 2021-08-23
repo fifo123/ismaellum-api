@@ -22,4 +22,8 @@ export class ProcedureHistoryService {
   async getUserCredits(user_id: number): Promise<number> {
     return this.procedureHistoryRepository.getUserCredits(user_id);
   }
+
+  async getUserTotalXp(user_id: number): Promise<number> {
+    return this.procedureHistoryRepository.getUserTotalXp(user_id);
+  }
 }
