@@ -10,6 +10,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { GraphQLError } from 'graphql';
 import { ProcedureModule } from './modules/procedure/procedure.module';
+import { ProcedureHistoryModule } from './modules/procedure-history/procedure-history.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { ProcedureModule } from './modules/procedure/procedure.module';
     }),
     AuthModule,
     ProcedureModule,
+    ProcedureHistoryModule,
   ],
   controllers: [AppController],
 })
