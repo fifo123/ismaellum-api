@@ -6,6 +6,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class JwtAuthGuard extends AuthGuard('jwt') {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const type = context.getType();
+    if (type === 'ws') return super.canActivate(context) as Promise<boolean>;
     if (type !== 'http') {
       GqlExecutionContext.create(context);
     }
@@ -13,7 +14,9 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     return super.canActivate(context) as Promise<boolean>;
   }
 
-  handleRequest(err: any, user: any) {
+  handleRequest(err: any, user: any, ctx) {
+    console.log(ctx);
+
     if (err || !user) {
       throw err || new HttpException('Unauthorized', 401);
     }
@@ -21,7 +24,10 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   }
 
   getRequest(context: ExecutionContext) {
-    if (context.getType() !== 'http') {
+    const type = context.getType();
+
+    if (type === 'ws') return (context as any).args?.[0].handshake;
+    if (type !== 'http') {
       const ctx = GqlExecutionContext.create(context);
       return ctx.getContext().req;
     } else {
