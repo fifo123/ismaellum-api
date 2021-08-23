@@ -49,4 +49,12 @@ export class UserRepository {
       );
     }
   }
+
+  async getUserById(user_id: number): Promise<User> {
+    try {
+      return await this.userRepository.findOne(user_id);
+    } catch (error) {
+      throw new HttpException('Error in DB, could not find user by id', 500);
+    }
+  }
 }

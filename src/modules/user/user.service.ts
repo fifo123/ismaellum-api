@@ -37,6 +37,10 @@ export class UserService {
     return true;
   }
 
+  async getUserById(user_id: number): Promise<User> {
+    return this.userRepository.getUserById(user_id);
+  }
+
   async proceduresHistory(user_id: number): Promise<ProcedureHistory[]> {
     return this.procedureHistoryService.getProceduresByUserId(user_id);
   }
