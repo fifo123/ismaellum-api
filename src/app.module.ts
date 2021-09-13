@@ -11,6 +11,7 @@ import { join } from 'path';
 import { GraphQLError } from 'graphql';
 import { ProcedureModule } from './modules/procedure/procedure.module';
 import { ProcedureHistoryModule } from './modules/procedure-history/procedure-history.module';
+import { ProductModule } from './modules/products/product.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { ProcedureHistoryModule } from './modules/procedure-history/procedure-hi
     AuthModule,
     ProcedureModule,
     ProcedureHistoryModule,
+    ProductModule
   ],
   controllers: [AppController],
 })
