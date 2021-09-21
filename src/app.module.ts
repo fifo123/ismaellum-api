@@ -12,6 +12,7 @@ import { GraphQLError } from 'graphql';
 import { ProcedureModule } from './modules/procedure/procedure.module';
 import { ProcedureHistoryModule } from './modules/procedure-history/procedure-history.module';
 import { ProductModule } from './modules/products/product.module';
+import { RoomModule } from './modules/room/room.module';
 
 @Module({
   imports: [
@@ -44,7 +45,8 @@ import { ProductModule } from './modules/products/product.module';
     AuthModule,
     ProcedureModule,
     ProcedureHistoryModule,
-    ProductModule
+    ProductModule,
+    RoomModule
   ],
   controllers: [AppController],
 })
