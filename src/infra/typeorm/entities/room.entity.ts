@@ -12,8 +12,8 @@ export class RoomEntity {
     room_id: number;
 
    @Column({
-    type: 'int',
-    name: 'number',
+    type: 'varchar',
+    length: 20,
     nullable: false,
   })
   number: string;
