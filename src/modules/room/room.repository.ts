@@ -17,7 +17,7 @@ export class RoomRepository {
       const room = this.roomRepository.create(data);
       return await this.roomRepository.save(room);
     } catch (error) {
-      throw new HttpException('Error in DB, could not create product', 500);
+      throw new HttpException('Error in DB, could not create room', 500);
     }
   }
 }
