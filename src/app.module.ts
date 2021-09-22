@@ -13,6 +13,7 @@ import { ProcedureModule } from './modules/procedure/procedure.module';
 import { ProcedureHistoryModule } from './modules/procedure-history/procedure-history.module';
 import { ProductModule } from './modules/products/product.module';
 import { RoomModule } from './modules/room/room.module';
+import { FavoriteRoomModule } from './modules/favorite-room/favorite-room.module';
 
 @Module({
   imports: [
@@ -46,7 +47,8 @@ import { RoomModule } from './modules/room/room.module';
     ProcedureModule,
     ProcedureHistoryModule,
     ProductModule,
-    RoomModule
+    RoomModule,
+    FavoriteRoomModule
   ],
   controllers: [AppController],
 })
