@@ -1,26 +1,11 @@
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { Field, InputType } from '@nestjs/graphql';
 
+@InputType()
 export class CreateFavoriteRoom {
 
-  @IsNotEmpty({
-    message: 'Error: user_id is required',
-  })
-  @IsNumber(
-    {},
-    {
-      message: 'Error: user_id must be number',
-    },
-  )
+  @Field({ nullable: false })
   user_id: number;
 
-  @IsNotEmpty({
-    message: 'Error: room_id is required',
-  })
-  @IsNumber(
-    {},
-    {
-      message: 'Error: room_id must be number',
-    },
-  )
+  @Field({ nullable: false })
   room_id: number;
 }
