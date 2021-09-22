@@ -20,10 +20,14 @@ export class ProcedureHistoryService {
     data: CreateProcedureEvent,
   ): Promise<ProcedureHistory> {
     // To-Do: Implements send msg to client when new procedure event is emitted
-    this.eventsGateway.server.emit('msgToClient', {
-      msg: 'ok',
+    const newEvent = await this.procedureHistoryRepository.createProcedureEvent(
+      data,
+    );
+    this.eventsGateway.server.emit(data.user_id.toString(), {
+      totalXp: newEvent.totalXp,
+      totalCredits: newEvent.totalCredits,
     });
-    return this.procedureHistoryRepository.createProcedureEvent(data);
+    return newEvent;
   }
 
   async getUserTotalXpAndCredits(user_id: number): Promise<XpAndCreditsTotal> {

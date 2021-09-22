@@ -50,11 +50,12 @@ export class UserService {
   async getStats(user_id: number): Promise<Stats> {
     const { totalXp, totalCredits } =
       await this.procedureHistoryService.getUserTotalXpAndCredits(user_id);
-    const { currentXp, level } = getLevelAndCurrentXp(totalXp);
+    const { currentXp, level, levelXp } = getLevelAndCurrentXp(totalXp);
     return {
       totalXp,
       currentXp,
       level,
+      levelXp,
       credits: totalCredits,
     };
   }

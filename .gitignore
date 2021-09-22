@@ -36,4 +36,5 @@ lerna-debug.log*
 #local storage files
 /files
 
-src/schema.gql
+# removing auto generated graphql schema
+/src/schema.gql
