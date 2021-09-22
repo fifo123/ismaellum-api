@@ -2,9 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { FavoriteRoomEntity } from './favorite-room.entity';
 
 @Entity('Room')
 export class RoomEntity {
@@ -38,4 +40,9 @@ export class RoomEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => FavoriteRoomEntity, (favoriteRoom) => favoriteRoom.room, {
+    nullable: true,
+  })
+  favoriteRooms?: FavoriteRoomEntity[];
 }
