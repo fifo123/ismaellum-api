@@ -35,3 +35,5 @@ lerna-debug.log*
 
 #local storage files
 /files
+
+src/schema.gql
