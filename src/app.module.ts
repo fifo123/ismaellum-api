@@ -14,6 +14,7 @@ import { ProcedureHistoryModule } from './modules/procedure-history/procedure-hi
 import { ProductModule } from './modules/products/product.module';
 import { RoomModule } from './modules/room/room.module';
 import { FavoriteRoomModule } from './modules/favorite-room/favorite-room.module';
+import { ProductHistoryModule } from './modules/product-history/product-history.module';
 
 @Module({
   imports: [
@@ -48,7 +49,8 @@ import { FavoriteRoomModule } from './modules/favorite-room/favorite-room.module
     ProcedureHistoryModule,
     ProductModule,
     RoomModule,
-    FavoriteRoomModule
+    FavoriteRoomModule,
+    ProductHistoryModule
   ],
   controllers: [AppController],
 })
