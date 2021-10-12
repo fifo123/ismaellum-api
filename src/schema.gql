@@ -38,6 +38,26 @@ type User {
   email: String!
   proceduresHistory: [ProcedureHistory!]
   stats: Stats
+  favoriteRooms: [FavoriteRoom!]
+}
+
+"""Room model"""
+type Room {
+  room_id: Float!
+  number: String!
+  description: String!
+  picture: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Favorite Room model"""
+type FavoriteRoom {
+  favorite_room_id: Float!
+  user: User!
+  room: Room!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """Stats model"""
@@ -55,6 +75,7 @@ type Query {
 
 type Mutation {
   signUpUser(data: SignUpUser!): User!
+  createFavoriteRoomForUser(room_id: Float!): FavoriteRoom!
   login(login: MakeLogin!): String!
 }
 
