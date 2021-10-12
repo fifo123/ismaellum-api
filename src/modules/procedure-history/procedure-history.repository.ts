@@ -46,8 +46,16 @@ export class ProcedureHistoryRepository {
         },
       });
       const saveEvent = await this.procedureHistoryRepository.save(createEvent);
-      return this.adapter(saveEvent);
+      const findEvent = await this.procedureHistoryRepository.findOne(
+        saveEvent.procedure_history_id,
+        {
+          relations: ['procedure'],
+        },
+      );
+      return this.adapter(findEvent);
     } catch (error) {
+      console.log(error);
+
       throw new HttpException(
         'Error in DB, could not create procedure event',
         500,
@@ -72,10 +80,12 @@ export class ProcedureHistoryRepository {
         await qb.getRawOne<XpAndCreditsTotal>();
 
       return {
-        totalCredits: +totalCredits.toFixed(0),
-        totalXp: +totalXp.toFixed(0),
+        totalCredits: +(totalCredits || 0).toFixed(0),
+        totalXp: +(totalXp || 0).toFixed(0),
       };
     } catch (error) {
+      console.log(error);
+
       throw new HttpException('Error in DB, could not get credits gained', 500);
     }
   }

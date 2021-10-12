@@ -20,4 +20,8 @@ export class Stats {
     nullable: true,
   })
   currentXp?: number;
+  @Field(() => Int, {
+    nullable: true,
+  })
+  levelXp?: number;
 }
