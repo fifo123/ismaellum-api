@@ -1,6 +1,6 @@
 import { getLevelAndCurrentXp } from '@/common/constants/get-level-and-current-xp';
-import { CreateFavoriteRoom } from '@/common/domain/dtos/favorite-room/favorite-room-event.dto';
 import { SignUpUser } from '@/common/domain/dtos/user/';
+import { CreateFavoriteRoom } from '@/common/domain/interfaces/create-favorite-room.interface';
 import { ProcedureHistory, User } from '@/common/domain/models';
 import { FavoriteRoom } from '@/common/domain/models/favorite-room.model';
 import { Stats } from '@/common/domain/models/stats.model';

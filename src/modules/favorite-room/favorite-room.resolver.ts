@@ -1,5 +1,8 @@
-import { CreateFavoriteRoom } from '@/common/domain/dtos/favorite-room/favorite-room-event.dto';
+import { JwtAuthGuard } from '@/auth/jwt-auth.guard';
+import { UserLogged } from '@/common/decorators/user-logged.decorator';
+import { LoggedUser } from '@/common/domain/interfaces/auth';
 import { FavoriteRoom } from '@/common/domain/models/favorite-room.model';
+import { UseGuards } from '@nestjs/common';
 import {
   Args,
   Mutation,
@@ -11,8 +14,9 @@ import { FavoriteRoomService } from './favorite-room.service';
 export class FavoriteRoomResolver {
   constructor(private readonly favoriteRoomService: FavoriteRoomService) {}
   
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => FavoriteRoom)
-  async createFavoriteRoomForUser(@Args('data') data: CreateFavoriteRoom): Promise<FavoriteRoom> {
-    return this.favoriteRoomService.createFavoriteRoom(data);
+  async createFavoriteRoomForUser(@UserLogged() { user_id }: LoggedUser, @Args('room_id') room_id: number): Promise<FavoriteRoom> {
+    return this.favoriteRoomService.createFavoriteRoom({user_id, room_id});
   }
 }

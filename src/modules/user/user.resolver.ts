@@ -1,6 +1,5 @@
 import { JwtAuthGuard } from '@/auth/jwt-auth.guard';
 import { UserLogged } from '@/common/decorators/user-logged.decorator';
-import { CreateFavoriteRoom } from '@/common/domain/dtos/favorite-room/favorite-room-event.dto';
 import { SignUpUser } from '@/common/domain/dtos/user/';
 import { LoggedUser } from '@/common/domain/interfaces/auth';
 import { ProcedureHistory, User } from '@/common/domain/models';

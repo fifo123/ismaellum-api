@@ -1,4 +1,4 @@
-import { CreateFavoriteRoom } from '@/common/domain/dtos/favorite-room/favorite-room-event.dto';
+import { CreateFavoriteRoom } from '@/common/domain/interfaces/create-favorite-room.interface';
 import { FavoriteRoom } from '@/common/domain/models/favorite-room.model';
 import {
   Body,
