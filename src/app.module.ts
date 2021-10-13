@@ -15,6 +15,7 @@ import { ProductModule } from './modules/products/product.module';
 import { RoomModule } from './modules/room/room.module';
 import { FavoriteRoomModule } from './modules/favorite-room/favorite-room.module';
 import { ProductHistoryModule } from './modules/product-history/product-history.module';
+import { CategoryModule } from './modules/category/category.module';
 
 @Module({
   imports: [
@@ -50,7 +51,8 @@ import { ProductHistoryModule } from './modules/product-history/product-history.
     ProductModule,
     RoomModule,
     FavoriteRoomModule,
-    ProductHistoryModule
+    ProductHistoryModule,
+    CategoryModule
   ],
   controllers: [AppController],
 })
