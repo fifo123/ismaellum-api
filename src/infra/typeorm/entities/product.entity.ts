@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { ProductCategoryEntity } from './product-category.entity';
 import { ProductHistoryEntity } from './product-history.entity';
 
 @Entity('Product')
@@ -52,4 +53,9 @@ export class ProductEntity {
     nullable: true,
   })
   products?: ProductHistoryEntity[];
+
+  @OneToMany(() => ProductCategoryEntity, (productCategory) => productCategory.product, {
+    nullable: true,
+  })
+  productCategories?: ProductCategoryEntity[];
 }
