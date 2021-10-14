@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { ProcedureHistoryEntity } from './procedure-history.entity';
+import { RoomProcedureEntity } from './room-procedure.entity';
 
 @Entity('Procedure')
 export class ProcedureEntity {
@@ -59,4 +60,9 @@ export class ProcedureEntity {
     nullable: true,
   })
   procedures?: ProcedureHistoryEntity[];
+
+  @OneToMany(() => RoomProcedureEntity, (roomProcedure) => roomProcedure.procedure, {
+    nullable: true,
+  })
+  roomProcedures?: RoomProcedureEntity[];
 }

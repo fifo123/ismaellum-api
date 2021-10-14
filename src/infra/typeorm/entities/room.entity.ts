@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { FavoriteRoomEntity } from './favorite-room.entity';
+import { RoomProcedureEntity } from './room-procedure.entity';
 
 @Entity('Room')
 export class RoomEntity {
@@ -45,4 +46,9 @@ export class RoomEntity {
     nullable: true,
   })
   favoriteRooms?: FavoriteRoomEntity[];
+
+  @OneToMany(() => RoomProcedureEntity, (roomProcedure) => roomProcedure.room, {
+    nullable: true,
+  })
+  roomProcedures?: RoomProcedureEntity[];
 }
