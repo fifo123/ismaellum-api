@@ -20,4 +20,8 @@ export class ProductRepository {
       throw new HttpException('Error in DB, could not create product', 500);
     }
   }
+
+  async getProduct(product_id:number): Promise<Product> {
+    return await this.productRepository.findOne(product_id);
+  }
 }
