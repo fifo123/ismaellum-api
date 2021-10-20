@@ -1,9 +1,12 @@
 import { getLevelAndCurrentXp } from '@/common/constants/get-level-and-current-xp';
 import { SignUpUser } from '@/common/domain/dtos/user/';
+import { CreateFavoriteRoom } from '@/common/domain/interfaces/create-favorite-room.interface';
 import { ProcedureHistory, User } from '@/common/domain/models';
+import { FavoriteRoom } from '@/common/domain/models/favorite-room.model';
 import { Stats } from '@/common/domain/models/stats.model';
 import { deleteFile } from '@/common/functions/delete-file';
 import { HttpException, Injectable, Logger } from '@nestjs/common';
+import { FavoriteRoomService } from '../favorite-room/favorite-room.service';
 import { ProcedureHistoryService } from '../procedure-history/procedure-history.service';
 import { UserRepository } from './user.repository';
 
@@ -12,6 +15,7 @@ export class UserService {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly procedureHistoryService: ProcedureHistoryService,
+    private readonly favoriteRoomService: FavoriteRoomService,
   ) {}
 
   async signUp(data: SignUpUser): Promise<User> {
@@ -19,6 +23,10 @@ export class UserService {
     if (emailInUse)
       throw new HttpException('Error: Email already in use.', 400);
     return this.userRepository.signUp(data);
+  }
+
+  async createFavoriteRoomForUser(data: CreateFavoriteRoom): Promise<FavoriteRoom> {
+    return this.favoriteRoomService.createFavoriteRoom(data);
   }
 
   async updateProfilePicture(
@@ -58,5 +66,9 @@ export class UserService {
       levelXp,
       credits: totalCredits,
     };
+  }
+
+  async getFavoriteRooms(user_id: number): Promise<FavoriteRoom[]> {
+    return this.favoriteRoomService.getFavoriteRoomsByUserId(user_id);
   }
 }

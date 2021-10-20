@@ -3,6 +3,7 @@ import { UserLogged } from '@/common/decorators/user-logged.decorator';
 import { SignUpUser } from '@/common/domain/dtos/user/';
 import { LoggedUser } from '@/common/domain/interfaces/auth';
 import { ProcedureHistory, User } from '@/common/domain/models';
+import { FavoriteRoom } from '@/common/domain/models/favorite-room.model';
 import { Stats } from '@/common/domain/models/stats.model';
 import { UseGuards } from '@nestjs/common';
 import {
@@ -40,5 +41,10 @@ export class UserResolver {
   @ResolveField(() => Stats, { nullable: true })
   async stats(@Parent() user: User): Promise<Stats> {
     return this.userService.getStats(user.user_id);
+  }
+
+  @ResolveField(() => [FavoriteRoom], { nullable: true })
+  async favoriteRooms(@Parent() user: User): Promise<FavoriteRoom[]> {
+    return this.userService.getFavoriteRooms(user.user_id);
   }
 }

@@ -10,6 +10,8 @@ import {
 } from 'typeorm';
 import * as crypto from 'bcrypt';
 import { ProcedureHistoryEntity } from './procedure-history.entity';
+import { FavoriteRoomEntity } from './favorite-room.entity';
+import { ProductHistoryEntity } from './product-history.entity';
 
 @Entity('User')
 export class UserEntity {
@@ -66,4 +68,14 @@ export class UserEntity {
     nullable: true,
   })
   procedures?: ProcedureHistoryEntity[];
+
+  @OneToMany(() => ProductHistoryEntity, (productsHistory) => productsHistory.user, {
+    nullable: true,
+  })
+  products?: ProductHistoryEntity[];
+
+  @OneToMany(() => FavoriteRoomEntity, (favoriteRoom) => favoriteRoom.user, {
+    nullable: true,
+  })
+  favoriteRooms?: FavoriteRoomEntity[];
 }

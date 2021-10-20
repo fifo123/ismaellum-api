@@ -2,9 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { FavoriteRoomEntity } from './favorite-room.entity';
+import { RoomProcedureEntity } from './room-procedure.entity';
 
 @Entity('Room')
 export class RoomEntity {
@@ -38,4 +41,14 @@ export class RoomEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => FavoriteRoomEntity, (favoriteRoom) => favoriteRoom.room, {
+    nullable: true,
+  })
+  favoriteRooms?: FavoriteRoomEntity[];
+
+  @OneToMany(() => RoomProcedureEntity, (roomProcedure) => roomProcedure.room, {
+    nullable: true,
+  })
+  roomProcedures?: RoomProcedureEntity[];
 }

@@ -13,6 +13,11 @@ import { ProcedureModule } from './modules/procedure/procedure.module';
 import { ProcedureHistoryModule } from './modules/procedure-history/procedure-history.module';
 import { ProductModule } from './modules/products/product.module';
 import { RoomModule } from './modules/room/room.module';
+import { FavoriteRoomModule } from './modules/favorite-room/favorite-room.module';
+import { ProductHistoryModule } from './modules/product-history/product-history.module';
+import { CategoryModule } from './modules/category/category.module';
+import { ProductCategoryModule } from './modules/product-category/product-category.module';
+import { RoomProcedureModule } from './modules/room-procedure/room-procedure.module';
 
 @Module({
   imports: [
@@ -46,7 +51,12 @@ import { RoomModule } from './modules/room/room.module';
     ProcedureModule,
     ProcedureHistoryModule,
     ProductModule,
-    RoomModule
+    RoomModule,
+    FavoriteRoomModule,
+    ProductHistoryModule,
+    CategoryModule,
+    ProductCategoryModule,
+    RoomProcedureModule
   ],
   controllers: [AppController],
 })
