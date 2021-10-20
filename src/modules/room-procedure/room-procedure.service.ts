@@ -14,4 +14,8 @@ export class RoomProcedureService {
   ): Promise<RoomProcedure> {
     return this.roomProcedureRepository.createRoomProcedure(data);
   }
+
+  async getRoomProcedures(room_id: number): Promise<RoomProcedure[]> {
+    return this.roomProcedureRepository.getRoomProcedures(room_id);
+  }
 }

@@ -34,4 +34,12 @@ export class RoomProcedureRepository {
       );
     }
   }
+
+  async getRoomProcedures(room_id: number): Promise<RoomProcedure[]> {
+    return this.roomProcedureEntity.find({
+      where: {
+        room_id
+      }
+    });
+}
 }

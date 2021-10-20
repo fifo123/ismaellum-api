@@ -8,5 +8,6 @@ import { RoomProcedureService } from './room-procedure.service';
 @Module({
   imports: [TypeOrmModule.forFeature([RoomProcedureEntity])],
   providers: [RoomProcedureService, RoomProcedureRepository, RoomProcedureResolver],
+  exports: [RoomProcedureService],
 })
 export class RoomProcedureModule {}

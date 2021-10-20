@@ -66,17 +66,70 @@ type Stats {
   totalXp: Int
   level: Int
   currentXp: Int
+  levelXp: Int
+}
+
+"""Product model"""
+type Product {
+  product_id: Float!
+  description: String!
+  name: String!
+  creditsPrice: Float!
+  picture: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Product History model"""
+type ProductHistory {
+  product_history_id: Float!
+  user: User!
+  product: Product!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Category model"""
+type Category {
+  category_id: Float!
+  name: String!
+  description: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Product Category model"""
+type ProductCategory {
+  product_category_id: Float!
+  category: Category!
+  product: Product!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Room Procedure model"""
+type RoomProcedure {
+  room_procedure_id: Float!
+  room: Room!
+  procedure: Procedure!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type Query {
   user: User!
   graphqlHealth: Boolean!
+  room(room_id: Float!): Room!
 }
 
 type Mutation {
   signUpUser(data: SignUpUser!): User!
   createFavoriteRoomForUser(room_id: Float!): FavoriteRoom!
   login(login: MakeLogin!): String!
+  createProductHistoryForUser(product_id: Float!): ProductHistory!
+  createCategory(data: CreateCategory!): Category!
+  createProductCategory(data: CreateProductCategory!): ProductCategory!
+  createRoomProcedure(data: CreateRoomProcedure!): RoomProcedure!
 }
 
 input SignUpUser {
@@ -88,4 +141,19 @@ input SignUpUser {
 input MakeLogin {
   email: String!
   password: String!
+}
+
+input CreateCategory {
+  description: String
+  name: String!
+}
+
+input CreateProductCategory {
+  category_id: Float!
+  product_id: Float!
+}
+
+input CreateRoomProcedure {
+  room_id: Float!
+  procedure_id: Float!
 }
