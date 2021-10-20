@@ -16,20 +16,40 @@ export class FavoriteRoomRepository {
     data: CreateFavoriteRoom,
   ): Promise<FavoriteRoom> {
     try {
-      const createFavoriteRoom = this.favoriteRoomRepository.create({
-        ...data,
-        user: {
-          user_id: data.user_id,
+      
+      const getFavoriteRoomById = await this.favoriteRoomRepository.findOne({
+        relations: ['user','room'],
+        where: {
+          user: {
+            user_id: data.user_id,
+          },
+          room: {
+            room_id : data.room_id
+          }
         },
-        room: {
-          room_id: data.room_id
-        }
       });
+      
+      if(!getFavoriteRoomById) {
+        const createFavoriteRoom = this.favoriteRoomRepository.create({
+          ...data,
+          user: {
+            user_id: data.user_id,
+          },
+          room: {
+            room_id: data.room_id
+          }
+        });
+
+        return await this.favoriteRoomRepository.save(createFavoriteRoom);
+      }
+      else {
+        this.favoriteRoomRepository.delete(getFavoriteRoomById.favorite_room_id);
+        return getFavoriteRoomById;
+      }
     
-      return await this.favoriteRoomRepository.save(createFavoriteRoom);
     } catch (error) {
       throw new HttpException(
-        'Error in DB, could not create favorite room',
+        'Error in DB, could not create or delete favorite room',
         500,
       );
     }
