@@ -23,10 +23,7 @@ export class RoomController {
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('picture', multerStorageConfig))
   @Post('/create-room')
-  async createRoom(
-    @UploadedFile() file: any,
-    @Body() data: CreateRoom,
-  ) {
+  async createRoom(@UploadedFile() file: any, @Body() data: CreateRoom) {
     if (!file?.filename)
       throw new HttpException('Error: picture is required', 400);
     return this.roomService.createRoom({

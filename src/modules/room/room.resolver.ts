@@ -1,5 +1,10 @@
+import { JwtAuthGuard } from '@/auth/jwt-auth.guard';
+import { UserLogged } from '@/common/decorators/user-logged.decorator';
+import { LoggedUser } from '@/common/domain/interfaces/auth';
+import { ProcedureHistory } from '@/common/domain/models';
 import { RoomProcedure } from '@/common/domain/models/room-procedure.model';
 import { Room } from '@/common/domain/models/room.model';
+import { UseGuards } from '@nestjs/common';
 import {
   Args,
   Int,
@@ -15,6 +20,7 @@ export class RoomResolver {
   constructor(private readonly roomService: RoomService) {}
 
   @Query(() => Room)
+  @UseGuards(JwtAuthGuard)
   async room(@Args('room_id') room_id: number): Promise<Room> {
     return this.roomService.getInformationForRoom(room_id);
   }
@@ -22,5 +28,13 @@ export class RoomResolver {
   @ResolveField(() => [RoomProcedure], { nullable: true })
   async roomProcedures(@Parent() room: Room): Promise<RoomProcedure[]> {
     return this.roomService.getRoomProcedures(room.room_id);
+  }
+
+  @ResolveField(() => [ProcedureHistory], { nullable: true })
+  async history(
+    @Parent() room: Room,
+    @UserLogged() { user_id }: LoggedUser,
+  ): Promise<ProcedureHistory[]> {
+    return this.roomService.getHistory(user_id);
   }
 }
