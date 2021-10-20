@@ -36,4 +36,9 @@ export class ProductCategoryRepository {
       );
     }
   }
+
+  async listProductCategory(): Promise<ProductCategory[]> {
+    const productCategoryList = await this.productCategoryEntity.find({relations: ['product', 'category']});
+    return productCategoryList;
+  }
 }

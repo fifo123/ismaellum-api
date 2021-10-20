@@ -10,4 +10,8 @@ export class ProductService {
   async createProduct(data: CreateProduct): Promise<Product> {
     return this.productRepository.createProduct(data);
   }
+
+  async getProduct(product_id:number): Promise<Product> {
+    return this.productRepository.getProduct(product_id);
+  }
 }

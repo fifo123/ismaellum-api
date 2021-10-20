@@ -10,4 +10,8 @@ export class CategoryService {
   async createCategory(data: CreateCategory): Promise<Category> {
     return this.categoryRepository.createCategory(data);
   }
+
+  async getCategory(category_id: number): Promise<Category> {
+    return this.categoryRepository.getCategory(category_id);
+  }
 }

@@ -21,4 +21,8 @@ export class CategoryRepository {
       throw new HttpException('Error in DB, could not create category', 500);
     }
   }
+
+  async getCategory(category_id: number): Promise<Category> {
+    return await this.categoryRepository.findOne(category_id);
+  }
 }
