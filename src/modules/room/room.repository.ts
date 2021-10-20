@@ -47,7 +47,7 @@ export class RoomRepository {
         (roomHistory) => roomHistory?.user?.user_id === user_id,
       );
 
-      return this.map(roomInfo);
+      return this.map(roomInfo.reverse());
     } catch (error) {
       console.log(error);
 

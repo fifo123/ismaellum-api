@@ -51,6 +51,7 @@ export class UserResolver {
 
   @ResolveField(() => [Room], { nullable: true })
   async lastRooms(@Parent() user: User): Promise<Room[]> {
-    return this.userService.getLastRooms(user.user_id);
+    const lastRooms = await this.userService.getLastRooms(user.user_id);
+    return lastRooms;
   }
 }

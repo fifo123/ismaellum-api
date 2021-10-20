@@ -66,7 +66,7 @@ export class UserService {
     const { currentXp, level, levelXp } = getLevelAndCurrentXp(totalXp);
 
     const creditsUsed = await this.getCreditsUsed(user_id);
-    
+
     const finalCredits = totalCredits - creditsUsed;
 
     return {
@@ -86,7 +86,7 @@ export class UserService {
     return this.procedureHistoryService.getLastRooms(user_id);
   }
 
-  async getCreditsUsed(user_id:number): Promise<number> {
+  async getCreditsUsed(user_id: number): Promise<number> {
     return this.productHistoryService.getCreditsUsed(user_id);
   }
 }

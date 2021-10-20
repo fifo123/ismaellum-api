@@ -104,10 +104,11 @@ export class ProcedureHistoryRepository {
         user_id,
       });
       const rooms = (await qb.getMany()).map((history) => history.room);
-      const uniqueRooms = [...new Set(rooms.map((room) => room?.room_id))];
+      const uniqueRooms = rooms.map((room) => room?.room_id);
 
       return rooms.filter(
-        (room, index) => uniqueRooms.indexOf(room?.room_id) === index,
+        (room, index) =>
+          uniqueRooms.indexOf(room?.room_id) === index && room?.room_id,
       );
     } catch (error) {
       console.log(error);
