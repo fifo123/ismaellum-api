@@ -1,6 +1,7 @@
 import { CreateProcedureEvent } from '@/common/domain/dtos/procedure-history/procedure-history-event.dto';
 import { XpAndCreditsTotal } from '@/common/domain/interfaces/xp-and-credits-total.interface';
 import { ProcedureHistory } from '@/common/domain/models';
+import { Room } from '@/common/domain/models/room.model';
 import { ProcedureHistoryEntity } from '@/infra/typeorm/entities';
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -90,6 +91,26 @@ export class ProcedureHistoryRepository {
       console.log(error);
 
       throw new HttpException('Error in DB, could not get credits gained', 500);
+    }
+  }
+
+  async getLastRooms(user_id: number): Promise<Room[]> {
+    try {
+      const qb =
+        this.procedureHistoryRepository.createQueryBuilder('procedure-history');
+      qb.leftJoinAndSelect('procedure-history.user', 'user');
+      qb.leftJoinAndSelect('procedure-history.room', 'room');
+      qb.where('user.user_id = :user_id', {
+        user_id,
+      });
+      const rooms = (await qb.getMany()).map((history) => history.room);
+      const uniqueRooms = [...new Set(rooms.map((room) => room?.room_id))];
+
+      return rooms.filter(
+        (room, index) => uniqueRooms.indexOf(room?.room_id) === index,
+      );
+    } catch (error) {
+      console.log(error);
     }
   }
 

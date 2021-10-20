@@ -3,6 +3,7 @@ import { SignUpUser } from '@/common/domain/dtos/user/';
 import { CreateFavoriteRoom } from '@/common/domain/interfaces/create-favorite-room.interface';
 import { ProcedureHistory, User } from '@/common/domain/models';
 import { FavoriteRoom } from '@/common/domain/models/favorite-room.model';
+import { Room } from '@/common/domain/models/room.model';
 import { Stats } from '@/common/domain/models/stats.model';
 import { deleteFile } from '@/common/functions/delete-file';
 import { HttpException, Injectable, Logger } from '@nestjs/common';
@@ -25,7 +26,9 @@ export class UserService {
     return this.userRepository.signUp(data);
   }
 
-  async createFavoriteRoomForUser(data: CreateFavoriteRoom): Promise<FavoriteRoom> {
+  async createFavoriteRoomForUser(
+    data: CreateFavoriteRoom,
+  ): Promise<FavoriteRoom> {
     return this.favoriteRoomService.createFavoriteRoom(data);
   }
 
@@ -70,5 +73,9 @@ export class UserService {
 
   async getFavoriteRooms(user_id: number): Promise<FavoriteRoom[]> {
     return this.favoriteRoomService.getFavoriteRoomsByUserId(user_id);
+  }
+
+  async getLastRooms(user_id: number): Promise<Room[]> {
+    return this.procedureHistoryService.getLastRooms(user_id);
   }
 }
