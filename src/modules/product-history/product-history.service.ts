@@ -14,4 +14,8 @@ export class ProductHistoryService {
   ): Promise<ProductHistory> {
     return this.productHistoryRepository.createProductHistory(data);
   }
+
+  async getCreditsUsed(user_id:number): Promise<number> {
+    return this.productHistoryRepository.getCreditsUsed(user_id);
+  }
 }

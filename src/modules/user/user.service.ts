@@ -9,6 +9,7 @@ import { deleteFile } from '@/common/functions/delete-file';
 import { HttpException, Injectable, Logger } from '@nestjs/common';
 import { FavoriteRoomService } from '../favorite-room/favorite-room.service';
 import { ProcedureHistoryService } from '../procedure-history/procedure-history.service';
+import { ProductHistoryService } from '../product-history/product-history.service';
 import { UserRepository } from './user.repository';
 
 @Injectable()
@@ -16,6 +17,7 @@ export class UserService {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly procedureHistoryService: ProcedureHistoryService,
+    private readonly productHistoryService: ProductHistoryService,
     private readonly favoriteRoomService: FavoriteRoomService,
   ) {}
 
@@ -62,12 +64,17 @@ export class UserService {
     const { totalXp, totalCredits } =
       await this.procedureHistoryService.getUserTotalXpAndCredits(user_id);
     const { currentXp, level, levelXp } = getLevelAndCurrentXp(totalXp);
+
+    const creditsUsed = await this.getCreditsUsed(user_id);
+    
+    const finalCredits = totalCredits - creditsUsed;
+
     return {
       totalXp,
       currentXp,
       level,
       levelXp,
-      credits: totalCredits,
+      credits: finalCredits,
     };
   }
 
@@ -77,5 +84,9 @@ export class UserService {
 
   async getLastRooms(user_id: number): Promise<Room[]> {
     return this.procedureHistoryService.getLastRooms(user_id);
+  }
+
+  async getCreditsUsed(user_id:number): Promise<number> {
+    return this.productHistoryService.getCreditsUsed(user_id);
   }
 }

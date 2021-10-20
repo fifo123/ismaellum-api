@@ -25,7 +25,7 @@ export class ProductHistoryRepository {
           product_id: data.product_id
         }
       });
-    
+      
       return await this.productHistoryRepository.save(createProductHistory);
     } catch (error) {
       throw new HttpException(
@@ -33,5 +33,19 @@ export class ProductHistoryRepository {
         500,
       );
     }
+  }
+
+  async getCreditsUsed(user_id:number): Promise<number> {
+    const qbProductsBought = this.productHistoryRepository.createQueryBuilder('product-history');
+      qbProductsBought.leftJoinAndSelect('product-history.user', 'user');
+      qbProductsBought.leftJoinAndSelect('product-history.product', 'product');
+      qbProductsBought.where('user.user_id = :user_id', {
+        user_id,
+      });
+      qbProductsBought.select('SUM("credits_price")', "sum");
+      
+      const credits : number = (await qbProductsBought.getRawOne<{sum:number}>()).sum;
+      
+      return +(credits*1 || 0).toFixed(0);
   }
 }

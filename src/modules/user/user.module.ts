@@ -7,10 +7,11 @@ import { UserResolver } from './user.resolver';
 import { UserController } from './user.controller';
 import { ProcedureHistoryModule } from '../procedure-history/procedure-history.module';
 import { FavoriteRoomModule } from '../favorite-room/favorite-room.module';
+import { ProductHistoryModule } from '../product-history/product-history.module';
 
 @Module({
   providers: [UserRepository, UserService, UserResolver],
-  imports: [TypeOrmModule.forFeature([UserEntity]), ProcedureHistoryModule, FavoriteRoomModule],
+  imports: [TypeOrmModule.forFeature([UserEntity]), ProcedureHistoryModule, FavoriteRoomModule, ProductHistoryModule],
   exports: [UserRepository],
   controllers: [UserController],
 })

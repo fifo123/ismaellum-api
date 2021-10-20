@@ -39,6 +39,7 @@ type User {
   proceduresHistory: [ProcedureHistory!]
   stats: Stats
   favoriteRooms: [FavoriteRoom!]
+  lastRooms: [Room!]
 }
 
 """Room model"""
@@ -50,6 +51,8 @@ type Room {
   createdAt: DateTime!
   updatedAt: DateTime!
   roomProcedures: [RoomProcedure!]
+  history: [ProcedureHistory!]
+  isFavorite: Boolean
 }
 
 """Favorite Room model"""
@@ -81,20 +84,20 @@ type Product {
   updatedAt: DateTime!
 }
 
-"""Room Procedure model"""
-type RoomProcedure {
-  room_procedure_id: Float!
-  room: Room!
-  procedure: Procedure!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
 """Product History model"""
 type ProductHistory {
   product_history_id: Float!
   user: User!
   product: Product!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Room Procedure model"""
+type RoomProcedure {
+  room_procedure_id: Float!
+  room: Room!
+  procedure: Procedure!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -127,9 +130,9 @@ type Query {
 type Mutation {
   signUpUser(data: SignUpUser!): User!
   createFavoriteRoomForUser(room_id: Float!): FavoriteRoom!
+  createProductHistoryForUser(product_id: Float!): ProductHistory!
   login(login: MakeLogin!): String!
   createRoomProcedure(data: CreateRoomProcedure!): RoomProcedure!
-  createProductHistoryForUser(product_id: Float!): ProductHistory!
   createCategory(data: CreateCategory!): Category!
   createProductCategory(data: CreateProductCategory!): ProductCategory!
 }
