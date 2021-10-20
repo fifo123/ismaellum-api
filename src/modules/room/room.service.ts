@@ -28,4 +28,8 @@ export class RoomService {
   async getHistory(user_id: number): Promise<ProcedureHistory[]> {
     return this.roomRepository.getHistory(user_id);
   }
+
+  async getIsFavorite(user_id: number): Promise<boolean> {
+    return this.roomRepository.getIsFavorite(user_id);
+  }
 }

@@ -37,4 +37,12 @@ export class RoomResolver {
   ): Promise<ProcedureHistory[]> {
     return this.roomService.getHistory(user_id);
   }
+
+  @ResolveField(() => Boolean, { nullable: true })
+  async isFavorite(
+    @Parent() room: Room,
+    @UserLogged() { user_id }: LoggedUser,
+  ): Promise<boolean> {
+    return this.roomService.getIsFavorite(user_id);
+  }
 }

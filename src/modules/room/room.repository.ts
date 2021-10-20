@@ -55,6 +55,22 @@ export class RoomRepository {
     }
   }
 
+  async getIsFavorite(user_id: number): Promise<boolean> {
+    try {
+      const roomInfo = await this.roomRepository.findOne({
+        relations: ['favoriteRooms', 'favoriteRooms.user'],
+      });
+
+      return roomInfo.favoriteRooms?.some(
+        (favoriteRoom) => favoriteRoom.user?.user_id === user_id,
+      );
+    } catch (error) {
+      console.log(error);
+
+      throw new HttpException('Error in DB, could not create room', 500);
+    }
+  }
+
   private adapter(procedure: ProcedureHistoryEntity): ProcedureHistory {
     return {
       ...procedure,
