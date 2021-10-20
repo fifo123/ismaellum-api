@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { ProcedureEntity } from './procedure.entity';
+import { RoomEntity } from './room.entity';
 import { UserEntity } from './user.entity';
 
 @Entity('ProcedureHistory')
@@ -42,4 +43,12 @@ export class ProcedureHistoryEntity {
     name: 'procedure_id',
   })
   procedure: ProcedureEntity;
+
+  @ManyToOne(() => RoomEntity, (room) => room.history, {
+    nullable: true,
+  })
+  @JoinColumn({
+    name: 'room_id',
+  })
+  room?: RoomEntity;
 }

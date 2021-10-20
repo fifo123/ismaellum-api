@@ -6,15 +6,16 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { ProcedureHistoryEntity } from '.';
 import { FavoriteRoomEntity } from './favorite-room.entity';
 import { RoomProcedureEntity } from './room-procedure.entity';
 
 @Entity('Room')
 export class RoomEntity {
   @PrimaryGeneratedColumn('increment')
-    room_id: number;
+  room_id: number;
 
-   @Column({
+  @Column({
     type: 'varchar',
     length: 20,
     nullable: false,
@@ -51,4 +52,9 @@ export class RoomEntity {
     nullable: true,
   })
   roomProcedures?: RoomProcedureEntity[];
+
+  @OneToMany(() => ProcedureHistoryEntity, (history) => history.room, {
+    nullable: true,
+  })
+  history?: ProcedureHistoryEntity[];
 }

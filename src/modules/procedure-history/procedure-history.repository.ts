@@ -44,6 +44,9 @@ export class ProcedureHistoryRepository {
         procedure: {
           procedure_id: data.procedure_id,
         },
+        room: {
+          room_id: data.room_id,
+        },
       });
       const saveEvent = await this.procedureHistoryRepository.save(createEvent);
       const findEvent = await this.procedureHistoryRepository.findOne(

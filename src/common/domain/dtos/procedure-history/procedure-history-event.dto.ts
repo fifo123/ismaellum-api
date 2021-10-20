@@ -33,4 +33,15 @@ export class CreateProcedureEvent {
     },
   )
   percent: number;
+
+  @IsNotEmpty({
+    message: 'Error: room_id is required',
+  })
+  @IsNumber(
+    {},
+    {
+      message: 'Error: room_id must be number',
+    },
+  )
+  room_id: number;
 }
