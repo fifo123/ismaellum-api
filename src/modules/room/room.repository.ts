@@ -1,6 +1,4 @@
 import { CreateRoom } from '@/common/domain/dtos/room/create-room.dto';
-import { RoomInfo } from '@/common/domain/models/room-info.model';
-import { RoomProcedure } from '@/common/domain/models/room-procedure.model';
 import { Room } from '@/common/domain/models/room.model';
 import { RoomEntity } from '@/infra/typeorm/entities/room.entity';
 import { HttpException, Injectable } from '@nestjs/common';
