@@ -1,7 +1,14 @@
-import { RoomProcedure } from "@/common/domain/models/room-procedure.model";
-import { Room } from "@/common/domain/models/room.model";
-import { Args, Int, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
-import { RoomService } from "./room.service";
+import { RoomProcedure } from '@/common/domain/models/room-procedure.model';
+import { Room } from '@/common/domain/models/room.model';
+import {
+  Args,
+  Int,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
+import { RoomService } from './room.service';
 
 @Resolver(() => Room)
 export class RoomResolver {
@@ -12,8 +19,8 @@ export class RoomResolver {
     return this.roomService.getInformationForRoom(room_id);
   }
 
-  @ResolveField(() => RoomProcedure, { nullable: true })
-  async stats(@Parent() room: Room): Promise<RoomProcedure[]> {
+  @ResolveField(() => [RoomProcedure], { nullable: true })
+  async roomProcedures(@Parent() room: Room): Promise<RoomProcedure[]> {
     return this.roomService.getRoomProcedures(room.room_id);
   }
 }

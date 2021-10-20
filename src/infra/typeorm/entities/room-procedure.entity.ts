@@ -1,4 +1,5 @@
 import {
+  Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
@@ -19,6 +20,9 @@ export class RoomProcedureEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column()
+  room_id: number;
 
   @ManyToOne(() => RoomEntity, (room) => room.roomProcedures, {
     nullable: false,

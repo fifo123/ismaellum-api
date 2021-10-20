@@ -1,4 +1,5 @@
 import { CreateRoomProcedure } from '@/common/domain/dtos/room-procedure/create-room-procedure.dto';
+import { Procedure } from '@/common/domain/models';
 import { RoomProcedure } from '@/common/domain/models/room-procedure.model';
 import { RoomProcedureEntity } from '@/infra/typeorm/entities/room-procedure.entity';
 import { HttpException, Injectable } from '@nestjs/common';
@@ -12,9 +13,7 @@ export class RoomProcedureRepository {
     private readonly roomProcedureEntity: Repository<RoomProcedureEntity>,
   ) {}
 
-  async createRoomProcedure(
-    data: CreateRoomProcedure,
-  ): Promise<RoomProcedure> {
+  async createRoomProcedure(data: CreateRoomProcedure): Promise<RoomProcedure> {
     try {
       const createRoomProcedure = this.roomProcedureEntity.create({
         ...data,
@@ -22,10 +21,10 @@ export class RoomProcedureRepository {
           room_id: data.room_id,
         },
         procedure: {
-          procedure_id: data.procedure_id
-        }
+          procedure_id: data.procedure_id,
+        },
       });
-    
+
       return await this.roomProcedureEntity.save(createRoomProcedure);
     } catch (error) {
       throw new HttpException(
@@ -36,10 +35,21 @@ export class RoomProcedureRepository {
   }
 
   async getRoomProcedures(room_id: number): Promise<RoomProcedure[]> {
-    return this.roomProcedureEntity.find({
+    const roomsProcedures = await this.roomProcedureEntity.find({
       where: {
-        room_id
-      }
+        room_id,
+      },
     });
-}
+    return roomsProcedures;
+  }
+
+  async getProcedure(room_procedure_id: number): Promise<Procedure> {
+    const roomProcedure = await this.roomProcedureEntity.findOne(
+      room_procedure_id,
+      {
+        relations: ['procedure'],
+      },
+    );
+    return roomProcedure?.procedure;
+  }
 }

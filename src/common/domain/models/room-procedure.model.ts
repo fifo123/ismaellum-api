@@ -1,5 +1,4 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Product } from './product.model';
 import { Room } from './room.model';
 import { Procedure } from '.';
 
